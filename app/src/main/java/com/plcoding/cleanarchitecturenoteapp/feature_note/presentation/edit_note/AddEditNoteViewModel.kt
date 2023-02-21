@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.InvalidNoteException
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_cases.NoteUseCases
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_cases.question_use_cases.QuestionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private val noteUseCases:NoteUseCases,
+    private val questionUseCases: QuestionUseCases,
     savedStateHandle:SavedStateHandle
 ):ViewModel() {
     private var _noteTitle = mutableStateOf(NoteTextFieldState(hint = "Enter title"))
@@ -90,9 +92,9 @@ class AddEditNoteViewModel @Inject constructor(
                     }
                 }
             }
-            is AddEditNoteEvent.InsertPDF ->{
+            is AddEditNoteEvent.InsertPdf ->{
                 viewModelScope.launch {
-
+                    questionUseCases.insertPDF(event.pdfReader)
                 }
             }
         }

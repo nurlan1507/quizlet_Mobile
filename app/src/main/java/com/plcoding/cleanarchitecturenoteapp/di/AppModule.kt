@@ -11,6 +11,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.data.repository.Questi
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.repository.QuestionRepository
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_cases.*
+import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_cases.question_use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,6 +52,19 @@ object AppModule {
             DeleteNoteUseCase(noteRepository),
             AddNote(noteRepository),
             GetNoteUseCase(noteRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun questionUseCases(noteRepository: NoteRepository, questionRepository: QuestionRepository):QuestionUseCases{
+        return QuestionUseCases(
+            GetQuestionsWithAnswers(noteRepository,questionRepository),
+            InserQuestion(noteRepository,questionRepository),
+             InsertAnswer(noteRepository,questionRepository),
+            DeleteQuestion(noteRepository,questionRepository),
+            DeleteAnswer(noteRepository,questionRepository),
+            InsertPDF(noteRepository,questionRepository)
         )
     }
 

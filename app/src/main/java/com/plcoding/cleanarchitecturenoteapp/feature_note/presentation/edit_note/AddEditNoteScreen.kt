@@ -169,7 +169,7 @@ fun AddEditNoteScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             InsertPdfButton(context = ctx , text = "Insert quiz", onClick = {
-                viewModel.onEvent(AddEditNoteEvent.InsertPDF)
+                viewModel.onEvent(AddEditNoteEvent.InsertPdf(it))
             })
         }
     }

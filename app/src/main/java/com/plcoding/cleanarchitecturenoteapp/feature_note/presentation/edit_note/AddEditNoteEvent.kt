@@ -1,6 +1,7 @@
 package com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.edit_note
 
 import androidx.compose.ui.focus.FocusState
+import com.itextpdf.text.pdf.PdfReader
 
 sealed class AddEditNoteEvent{
     data class EnteredTitle(val value:String):AddEditNoteEvent()
@@ -9,5 +10,6 @@ sealed class AddEditNoteEvent{
     data class ChangeContentFocus(val focusState: FocusState):AddEditNoteEvent()
     data class ChangeColor(val color:Int):AddEditNoteEvent()
     object SaveNote :AddEditNoteEvent()
-    object InsertPDF:AddEditNoteEvent()
+
+    class InsertPdf(val pdfReader: PdfReader):AddEditNoteEvent()
 }

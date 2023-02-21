@@ -5,5 +5,6 @@ data class QuestionUseCases(
     val inserQuestion: InserQuestion,
     val insertAnswer: InsertAnswer,
     val deleteQuestion: DeleteQuestion,
-    val deleteAnswer: DeleteAnswer
+    val deleteAnswer: DeleteAnswer,
+    val insertPDF: InsertPDF
 )

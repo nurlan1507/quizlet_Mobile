@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("Range", "UnrememberedMutableState")
 @Composable
-fun InsertPdfButton(text:String, context: Context, onClick:()->Unit){
+fun InsertPdfButton(text:String, context: Context, onClick:(pdfReader:PdfReader)->Unit){
     val ctx = context
     val pdfUri = remember { mutableStateOf<Uri?>(null) }
     var state by remember {
@@ -88,7 +88,6 @@ fun InsertPdfButton(text:String, context: Context, onClick:()->Unit){
                         .height(40.dp)
                         .wrapContentWidth()
                         , onClick = {
-
                         try {
                             pdfUri?.value.let {
                                 Log.d("ISLOADING", (state is InsertPdfFileState.Loading).toString())
@@ -96,7 +95,7 @@ fun InsertPdfButton(text:String, context: Context, onClick:()->Unit){
                                 val filename = getFileName(it)
                                 val pdfReader = PdfReader(inputStream)
                                 val pageText = PdfTextExtractor.getTextFromPage(pdfReader, 1)
-                                Log.d("Filename", filename.toString())
+                                onClick(pdfReader)
                             }
                         }catch (e:Exception){
                         }
