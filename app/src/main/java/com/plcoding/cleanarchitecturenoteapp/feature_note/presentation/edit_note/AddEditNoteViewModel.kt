@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.InvalidNo
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Note
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_cases.NoteUseCases
 import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.use_cases.question_use_cases.QuestionUseCases
+import com.plcoding.cleanarchitecturenoteapp.feature_note.presentation.edit_questions.QuizQuestionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -37,6 +39,8 @@ class AddEditNoteViewModel @Inject constructor(
 
     private var _eventFlow  = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+
 
     private var currentNoteId:Int? = null
     init{
@@ -94,7 +98,16 @@ class AddEditNoteViewModel @Inject constructor(
             }
             is AddEditNoteEvent.InsertPdf ->{
                 viewModelScope.launch {
-                    questionUseCases.insertPDF(event.pdfReader)
+                    val newQuizId = noteUseCases.addNote.invoke(Note(
+                        title = _noteTitle.value.text,
+                        content = _noteContent.value.text,
+                        timestamp = System.currentTimeMillis(),
+                        color = _noteColor.value,
+                        id = currentNoteId
+                    ))
+                    viewModelScope.launch {
+                        var list = questionUseCases.insertPDF(event.pdfReader,newQuizId)
+                    }
                 }
             }
         }

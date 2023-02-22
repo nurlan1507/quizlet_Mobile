@@ -14,12 +14,12 @@ class QuestionRepositoryImpl(
         return dao.getQuestions()
     }
 
-    override fun getQuestionsWithAnswers(quizId: Int): Flow<List<QuestionAndAnswer>> {
+    override fun getQuestionsWithAnswers(quizId: Long): Flow<List<QuestionAndAnswer>> {
         return   dao.getQuestionsWithAnswers(quizId)
     }
 
-    override suspend fun createQuestion(question: Question) {
-        dao.createQuestion(question)
+    override suspend fun createQuestion(question: Question):Long {
+        return dao.createQuestion(question)
     }
 
     override suspend fun addAnswer(answer: Answer) {
@@ -32,5 +32,9 @@ class QuestionRepositoryImpl(
 
     override suspend fun deleteAnswer(answer: Answer) {
         dao.deleteAnswer(answer)
+    }
+
+    override suspend fun getAnswer(answerId: Long, questionId: Long): Answer {
+        return dao.getAnswer(answerId,questionId)
     }
 }

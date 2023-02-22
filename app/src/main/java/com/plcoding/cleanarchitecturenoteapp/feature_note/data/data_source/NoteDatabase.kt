@@ -8,7 +8,7 @@ import com.plcoding.cleanarchitecturenoteapp.feature_note.domain.model.Question
 
 @Database(
     entities = [Note::class, Question::class, Answer::class],
-    version = 3
+    version = 8
 )
 abstract class NoteDatabase:RoomDatabase() {
 

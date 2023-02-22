@@ -96,6 +96,7 @@ fun InsertPdfButton(text:String, context: Context, onClick:(pdfReader:PdfReader)
                                 val pdfReader = PdfReader(inputStream)
                                 val pageText = PdfTextExtractor.getTextFromPage(pdfReader, 1)
                                 onClick(pdfReader)
+                                pdfUri.value = null
                             }
                         }catch (e:Exception){
                         }

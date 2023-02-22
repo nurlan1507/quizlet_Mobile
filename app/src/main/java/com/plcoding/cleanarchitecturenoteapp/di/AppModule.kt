@@ -64,9 +64,12 @@ object AppModule {
              InsertAnswer(noteRepository,questionRepository),
             DeleteQuestion(noteRepository,questionRepository),
             DeleteAnswer(noteRepository,questionRepository),
-            InsertPDF(noteRepository,questionRepository)
+            InsertPDF(noteRepository,questionRepository),
+            SelectAnswer(questionRepository)
         )
     }
+
+
 
 
 }

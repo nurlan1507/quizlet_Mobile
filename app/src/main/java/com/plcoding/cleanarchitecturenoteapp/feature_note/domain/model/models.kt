@@ -8,9 +8,9 @@ import androidx.room.*
 data class Question(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="question_id")
-    val id:Int,
+    val id:Int?=null,
     @ColumnInfo(name="quiz_id")
-    val quizId:Int,
+    val quizId:Long,
     val text:String
 )
 
@@ -19,9 +19,9 @@ data class Question(
 data class Answer(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="answer_id")
-    val id:Int,
+    val id:Long ?= null,
     @ColumnInfo(name = "question_id")
-    val questionId:Int,
+    val questionId:Long,
     val text:String,
     val isCorrect:Boolean
 )

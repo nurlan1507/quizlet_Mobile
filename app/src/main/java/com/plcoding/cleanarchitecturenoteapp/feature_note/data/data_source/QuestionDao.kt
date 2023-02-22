@@ -13,10 +13,10 @@ interface QuestionDao {
     fun getQuestions(): Flow<List<Question>>
 
     @Query("SELECT * FROM questions where quiz_id = :quizId")
-    fun getQuestionsWithAnswers(quizId:Int): Flow<List<QuestionAndAnswer>>
+    fun getQuestionsWithAnswers(quizId:Long): Flow<List<QuestionAndAnswer>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createQuestion(question: Question)
+    suspend fun createQuestion(question: Question):Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAnswer(answer: Answer)
@@ -26,4 +26,7 @@ interface QuestionDao {
 
     @Delete
     suspend fun deleteAnswer(answer:Answer)
+
+    @Query("SELECT * FROM answers a WHERE a.question_id = :questionId AND a.answer_id = :answerId ")
+    suspend fun getAnswer(questionId:Long, answerId:Long):Answer
 }
